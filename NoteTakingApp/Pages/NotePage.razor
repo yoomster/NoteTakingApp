@@ -1,0 +1,35 @@
+﻿@page "/NotePage"
+
+<PageTitle>Custom Note Pad</PageTitle>
+
+<h3>Notes Page</h3>
+<EditForm Model="model" OnValidSubmit="ValidSubmission">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="note" class="form-label">@nameof(model.Note)</label>
+    <InputText id="message" @bind-Value="model.Note" class="form-control" />
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<ul>
+    @foreach(string note in notes)
+    {
+        <li>@note</li>
+    }
+</ul>
+
+@code {
+    private NotesModel model = new();
+    private List<string> notes = new();
+
+    private void ValidSubmission()
+    {
+        notes.Add(model.Note);
+        model = new();
+
+        // still to implement:
+        //call class libraby with data access code to save to SQL
+    }
+}
